@@ -16,4 +16,6 @@ public interface BankOfficerRepo extends CrudRepository<BankOfficer,Integer> {
 
     @Query("select u from BankOfficer u where (u.mobileNumber=?1 or u.userName=?1) and u.password=?2")
     BankOfficer offocerLogin(String userName, String password);
+
+
 }
