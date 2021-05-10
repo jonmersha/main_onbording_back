@@ -19,6 +19,7 @@ public class ResponseProcessor {
             customerCreateResponse.setTransactionId(transactionID);
             customerCreateResponse.setMessageId(messageId);
 
+
             if (status.equals("Success")) {
                 String application = node.getChildNodes().item(0).getChildNodes().item(3).getChildNodes().item(0).getNodeValue();
                 String shortname = node.getChildNodes().item(1).getChildNodes().item(1).getChildNodes().item(0).getChildNodes().item(0).getNodeValue();
@@ -29,6 +30,8 @@ public class ResponseProcessor {
             } else {
                 String message = node.getChildNodes().item(0).getChildNodes().item(4).getChildNodes().item(0).getNodeValue();
                 customerCreateResponse.setMessages(message);
+               // System.out.println(message);
+
             }
 
             //System.out.println(status);

@@ -61,15 +61,15 @@ public class CustomerService {
     	
     	BankOfficer bankOfficer=bankOfficerRepo
     			.getRequestCredentials(bankCustomer.getCashierCode(),bankCustomer.getCashierPassword());
-    	System.out.println(bankOfficer.getCorePass());
-    	
+    	System.out.println("Core Password"+bankOfficer.getCorePass());
+    	System.out.println("Core UserName"+bankOfficer.getUserName());
+
     	if(bankOfficer==null) {
     		return new CustomerCreateResponse();
     	}
         CustomerCreateResponse customerAccount= OnBoardingActivity.customerCreateResponse(bankCustomer,bankOfficer);
         if(customerAccount.getStatus().equals("Success")){
             System.out.println("Customer Creation is successfull");
-            
             CustomerAccount ca= new CustomerAccount(customerAccount);
             ca.setAccountCreator(bankCustomer.getCashierCode());
             
@@ -160,31 +160,39 @@ public class CustomerService {
     public CommonMessage imageCapture(ImageCapture imageCapture) {
        
     	String messageID="CU"+ RandomNumber.getRandom();
-    	
-    	
-    	
+        CustomerAccount customerAcc=customerAccountRepo.getCustomerByAccount(imageCapture.getAccountNumber());
+
+        if(customerAcc!=null)
+    if(imageCapture.getImageType().equals("SIGNATURES"))
+        imageCapture.setImageName(customerAcc.getSignatureImageName());
+    else
+        imageCapture.setImageName(customerAcc.getPersonImageName());
+
         imageCapture.setMessageId(messageID);
+
+        System.out.println(imageCapture.getImageName());
+
         try{
             ImageCaptureResponse response=OnBoardingActivity.imageCapture(imageCapture);
             if(response.getStatus().equals("Success")){
                 //get customer Account
-                CustomerAccount customerAccount=customerAccountRepo.getCustomerByAccount(imageCapture.getAccountNumber());
-                if(customerAccount==null)
+              //  CustomerAccount customerAccount=customerAccountRepo.getCustomerByAccount(imageCapture.getAccountNumber());
+                if(customerAcc==null)
                     return new CommonMessage().successMessage("Account Not Found");
                 if(imageCapture.getImageType().equals("SIGNATURES")){
                 	
-                	imageCapture.setImageName(customerAccount.getSignatureImageName());
-                	customerAccount.setCustomerImmageUploaded(true);
+                	imageCapture.setImageName(customerAcc.getSignatureImageName());
+                    customerAcc.setCustomerImmageUploaded(true);
                 	
                 }
                 if(imageCapture.getImageType().equals("PHOTOS")){
                 	
-                	imageCapture.setImageName(customerAccount.getPersonImageName());
-                	customerAccount.setCustomerImmageUploaded(true);
+                	imageCapture.setImageName(customerAcc.getPersonImageName());
+                    customerAcc.setCustomerImmageUploaded(true);
                 	
            
                 }
-                    customerAccountRepo.save(customerAccount);
+                    customerAccountRepo.save(customerAcc);
 
                 System.out.println("");
                 return new CommonMessage().successMessage("Image Capture completed");

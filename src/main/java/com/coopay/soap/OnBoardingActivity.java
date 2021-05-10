@@ -1,8 +1,4 @@
 package com.coopay.soap;
-
-
-
-
 import com.coopay.onboarding.entity.BankOfficer;
 import com.coopay.onboarding.model.AccountCreate;
 import com.coopay.onboarding.model.BankCustomer;
@@ -28,9 +24,9 @@ public class OnBoardingActivity {
     	//RequestCredentials requestCredentials=new RequestCredentials("ET0010001","MMTUSER1","123123");
         
     	RequestCredentials requestCredentials=new RequestCredentials(officer.getBranchCode(),officer.getUserName(),officer.getCorePass());
-
         String customerCreateBody=new CustomerCreateSoap()
         						.CustomerCreateBody(requestCredentials,bankCustomer);
+        System.out.println(customerCreateBody);
             SOAPMessage soapMessage=new CallRemoteAPI()
             		.soapRequest(customerCreateBody);
             CustomerCreateResponse customerinformation=new ResponseProcessor()
@@ -47,8 +43,6 @@ public class OnBoardingActivity {
                     customerinformation.setLastName(bankCustomer.getLastName());
                     customerinformation.setEmail(bankCustomer.getEmailId());
                     customerinformation.setMobileNumber(bankCustomer.getMobilePhoneNumber());
-
-
                     String authorizationMessage=new CustomerAuthorizeSoapBody().customerAuthorizationSoapBody(customerinformation.getTransactionId(),requestCredentials);
                     soapMessage=new RequestProcess().soapRequest(authorizationMessage);
                     String[] statStatus=new OnBoardingResponseProcessor().customerAuthorization(soapMessage);

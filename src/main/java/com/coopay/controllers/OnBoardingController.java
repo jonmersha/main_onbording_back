@@ -40,17 +40,17 @@ import java.util.Properties;
 //@Controller
 public class OnBoardingController {
 	
-//	private static final String REMOTE_HOST = "10.1.245.189";
-//	private static final String USERNAME = "t24prod";
-//    private static final String PASSWORD = "t24prod";
+	private static final String REMOTE_HOST = "10.1.245.189";
+	private static final String USERNAME = "t24prod";
+    private static final String PASSWORD = "t24prod";
 //    
 //    
 //    private static final String REMOTE_HOST = "10.0.19.54";
-    private static final String REMOTE_HOST = "10.1.11.101";
-
-    private static final String USERNAME = "yohannes";
-       private static final String PASSWORD = "Yohannes.1";
-       
+//    private static final String REMOTE_HOST = "10.1.11.101";
+//
+//    private static final String USERNAME = "yohannes";
+//       private static final String PASSWORD = "Yohannes.1";
+//
     
     private static final int REMOTE_PORT = 22;
     private static final int SESSION_TIMEOUT = 10000;
@@ -73,14 +73,23 @@ public class OnBoardingController {
 
     @PostMapping("/onboarding/customer/create")
     public CustomerCreateResponse createCustomer(@RequestBody BankCustomer bankCustomer){
-    
+        System.out.println("Cashier Code = "+bankCustomer.getCashierCode());
+
+        String initial=bankCustomer.getFirstName().substring(0,1).toUpperCase();
+       // String
+
+        String mobileNumber=bankCustomer.getMobilePhoneNumber();
+        int len=mobileNumber.length();
+        if(len>=10)
+            mobileNumber=mobileNumber.substring(len-9,len);
+        bankCustomer.setMessageID(initial+bankCustomer.getMobilePhoneNumber());
+        bankCustomer.setMnemonic(initial+mobileNumber);
    	return    customerService.createCustomer(bankCustomer);
     }
 
     @PostMapping("/onboarding/account/create")
     public CommonMessage createAccount(@RequestBody AccountCreate accountCreate){
-    	
-    	
+
     	String messageID="AC"+RandomNumber.getRandom();
     	accountCreate.setMessageId(messageID);
     	
@@ -132,14 +141,12 @@ public class OnBoardingController {
 		if(type.equals("SIGNATURES")) {
 			fileName="SIGN"+transactionId+"."+extenssion;
 			//customerService.saveSinature(fileName);
-			
 		}
 		if(type.equals("PHOTOS")) {
 			fileName="PHOTOS"+transactionId+"."+extenssion;
 			//customerService.savePhoto(fileName);
 
 		}
-		
 		System.out.println(fileName);
 		sendtoSftp(file,fileName);
 		
@@ -157,9 +164,11 @@ public class OnBoardingController {
 
 //use ByteArrayInputStream to get the bytes of the String and convert them to InputStream.
 //String remoteFile = "/u01/WebSphere/AppServer/profiles/Prod1/installedApps/webserver189Node01Cell/CBOCBSTEST_war.ear/CBOCBSTEST.war/im.images/signatures/"+fileName;
-	
-  String remoteFile = "/home/yohannes/Desktop/"+fileName;
-    
+//String remoteFile = "/u01/WebSphere/AppServer/profiles/Prod1/installedApps/webserver189Node01Cell/CBOCBSTEST_war.ear/CBOCBSTEST.war/im.images/signatures/"+fileName;
+
+  //String remoteFile = "/home/yohannes/Desktop/"+fileName;
+  String remoteFile = "/u01/WebSphere/AppServer/profiles/Prod1/installedApps/webserver189Node01Cell/CBOCBSTEST_war.ear/CBOCBSTEST.war/im.images/photos/"+fileName;
+
     Session jschSession = null;
 try {
 	InputStream inputStream;
