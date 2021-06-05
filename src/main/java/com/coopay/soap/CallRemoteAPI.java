@@ -9,6 +9,8 @@ import java.nio.charset.Charset;
 
 public class CallRemoteAPI {
 
+
+
     public SOAPMessage soapRequest(String soapMessage){
         SOAPConnectionFactory soapConnectionFactory = null;
         try {

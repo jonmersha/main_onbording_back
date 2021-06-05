@@ -18,20 +18,19 @@ import javax.xml.soap.SOAPMessage;
 public class OnBoardingActivity {
 	
     //======================Customer and Account Creation
-    public static CustomerCreateResponse customerCreateResponse(BankCustomer bankCustomer,BankOfficer officer){
-       //getting 
-    	
-    	//RequestCredentials requestCredentials=new RequestCredentials("ET0010001","MMTUSER1","123123");
-        
-    	RequestCredentials requestCredentials=new RequestCredentials(officer.getBranchCode(),officer.getUserName(),officer.getCorePass());
-        String customerCreateBody=new CustomerCreateSoap()
-        						.CustomerCreateBody(requestCredentials,bankCustomer);
-        System.out.println(customerCreateBody);
-            SOAPMessage soapMessage=new CallRemoteAPI()
-            		.soapRequest(customerCreateBody);
-            CustomerCreateResponse customerinformation=new ResponseProcessor()
-            		.customerCreationResponseToObject(soapMessage);
+    public static CustomerCreateResponse customerCreateResponse(BankCustomer bankCustomer, BankOfficer officer){
+        //getting
 
+        //RequestCredentials requestCredentials=new RequestCredentials("ET0010001","MMTUSER1","123123");
+
+        RequestCredentials requestCredentials=new RequestCredentials(officer.getBranchCode(),officer.getUserName(),officer.getCorePass());
+        String customerCreateBody=new CustomerCreateSoap()
+                .CustomerCreateBody(requestCredentials,bankCustomer);
+        System.out.println(customerCreateBody);
+        SOAPMessage soapMessage=new CallRemoteAPI()
+                .soapRequest(customerCreateBody);
+        CustomerCreateResponse customerinformation=new ResponseProcessor()
+                .customerCreationResponseToObject(soapMessage);
 
             if(customerinformation!=null)
             if(customerinformation.getMessages().equals("Customer Created")){

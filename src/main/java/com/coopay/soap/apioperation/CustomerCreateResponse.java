@@ -17,6 +17,8 @@ public class CustomerCreateResponse {
     private String fullName;
     private String authStatus;
 
+
+
     public boolean isCustomerAuthorized() {
         return customerAuthorized;
     }

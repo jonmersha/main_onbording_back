@@ -8,6 +8,7 @@ import com.coopay.onboarding.model.ImageCapture;
 import com.coopay.onboarding.model.ImageUpload;
 import com.coopay.repository.BankOfficerRepo;
 import com.coopay.repository.CustomerAccountRepo;
+
 import com.coopay.soap.OnBoardingActivity;
 import com.coopay.soap.apioperation.AccountCreateResponse;
 import com.coopay.soap.apioperation.CustomerCreateResponse;
@@ -58,11 +59,8 @@ public class CustomerService {
     }
 
     public CustomerCreateResponse createCustomer(BankCustomer bankCustomer) {
-    	
-    	BankOfficer bankOfficer=bankOfficerRepo
-    			.getRequestCredentials(bankCustomer.getCashierCode(),bankCustomer.getCashierPassword());
-    	System.out.println("Core Password"+bankOfficer.getCorePass());
-    	System.out.println("Core UserName"+bankOfficer.getUserName());
+    	//Getting The Officers Credentials
+    	BankOfficer bankOfficer=bankOfficerRepo.getRequestCredentials(bankCustomer.getCashierCode(),bankCustomer.getCashierPassword());
 
     	if(bankOfficer==null) {
     		return new CustomerCreateResponse();
@@ -72,7 +70,7 @@ public class CustomerService {
             System.out.println("Customer Creation is successfull");
             CustomerAccount ca= new CustomerAccount(customerAccount);
             ca.setAccountCreator(bankCustomer.getCashierCode());
-            
+
             customerAccountRepo.save(ca);
         }
         else{

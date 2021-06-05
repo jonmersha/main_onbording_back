@@ -96,6 +96,8 @@ public class CustomerCreateSoap {
                 "    </soapenv:Body>\n" +
                 "</soapenv:Envelope>\n";
 
+        System.out.println(customerCreateBody);
+
         return customerCreateBody;
     }
 }

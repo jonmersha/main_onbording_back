@@ -4,6 +4,8 @@ package com.coopay.onboarding.model;
 
 public class AccountCreate {
 
+    public String cashierCode;
+    public String cashierPassword;
     public String customerID;
     public String productCode;
     public String accountName;
@@ -11,6 +13,25 @@ public class AccountCreate {
     public String currency;
     String messageId;
 
+
+
+
+
+    public String getCashierCode() {
+        return cashierCode;
+    }
+
+    public void setCashierCode(String cashierCode) {
+        this.cashierCode = cashierCode;
+    }
+
+    public String getCashierPassword() {
+        return cashierPassword;
+    }
+
+    public void setCashierPassword(String cashierPassword) {
+        this.cashierPassword = cashierPassword;
+    }
 
     public String getMessageId() {
         return messageId;

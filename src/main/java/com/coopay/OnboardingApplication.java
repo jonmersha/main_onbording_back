@@ -13,7 +13,6 @@ import com.coopay.imageUpload.storage.StorageService;
 @SpringBootApplication
 @EnableConfigurationProperties(StorageProperties.class)
 public class OnboardingApplication {
-
 	public static void main(String[] args) {
 		SpringApplication.run(OnboardingApplication.class, args);
 	}

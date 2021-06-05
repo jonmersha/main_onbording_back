@@ -6,6 +6,7 @@ import com.coopay.onboarding.model.BankCustomer;
 
 import com.coopay.onboarding.model.ImageCapture;
 import com.coopay.onboarding.model.ImageUpload;
+
 import com.coopay.service.CustomerService;
 
 import com.coopay.soap.apioperation.CustomerCreateResponse;
@@ -60,12 +61,7 @@ public class OnBoardingController {
     @Autowired
     private final StorageService storageService = null;
     
-//   
-//	@Autowired
-//	public OnBoardingController(StorageService storageService) {
-//		this.storageService = storageService;
-//	}
-//	
+
 	
 	
     @Autowired
@@ -74,17 +70,14 @@ public class OnBoardingController {
     @PostMapping("/onboarding/customer/create")
     public CustomerCreateResponse createCustomer(@RequestBody BankCustomer bankCustomer){
         System.out.println("Cashier Code = "+bankCustomer.getCashierCode());
-
         String initial=bankCustomer.getFirstName().substring(0,1).toUpperCase();
-       // String
-
         String mobileNumber=bankCustomer.getMobilePhoneNumber();
         int len=mobileNumber.length();
         if(len>=10)
             mobileNumber=mobileNumber.substring(len-9,len);
         bankCustomer.setMessageID(initial+bankCustomer.getMobilePhoneNumber());
         bankCustomer.setMnemonic(initial+mobileNumber);
-   	return    customerService.createCustomer(bankCustomer);
+    	return    customerService.createCustomer(bankCustomer);
     }
 
     @PostMapping("/onboarding/account/create")
@@ -93,7 +86,7 @@ public class OnBoardingController {
     	String messageID="AC"+RandomNumber.getRandom();
     	accountCreate.setMessageId(messageID);
     	
-    	//System.out.println(accountCreate.getProductCode());
+
         return customerService.createAccountForCustomer(accountCreate);
     }
     

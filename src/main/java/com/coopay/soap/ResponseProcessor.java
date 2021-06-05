@@ -1,13 +1,42 @@
 package com.coopay.soap;
 
 import com.coopay.soap.apioperation.*;
-import com.coopay.soap.apioperation.XMLNodeElement;
 import org.w3c.dom.Node;
 
 import javax.xml.soap.SOAPMessage;
 
 public class ResponseProcessor {
 
+//    public CustomerCreateResponse customerCreationResponseToObjectccccc(SOAPMessage soapMessage) {
+//        ByteArrayOutputStream out = new ByteArrayOutputStream();
+//        try {
+//            soapMessage.writeTo(out);
+//            String strMsg = new String(out.toByteArray());
+//            JSONObject data = XML.toJSONObject(strMsg);
+//            System.out.println(data);
+//           ObjectMapper mapper = new ObjectMapper();
+//            CRResponse customerCreateResponse= mapper.readValue(data.toString(),CRResponse.class);
+//            String Status= customerCreateResponse.getSEnvelope().getSBody().getNs12CUSTCREATEResponse().getStatus().getSuccessIndicator();
+//           // System.out.println(Status);
+//
+//            Ns12CUSTCREATEResponse createResponse=customerCreateResponse.getSEnvelope().getSBody().getNs12CUSTCREATEResponse();
+//            if(createResponse.getStatus().getSuccessIndicator().equals("Success")){
+//                CustomerCreateResponse response=new CustomerCreateResponse();
+//
+//                CUSTOMERType customerType=createResponse.getCUSTOMERType();
+//
+//                response.setEmail(customerType.getNs6GPHONE1().getNs6MPHONE1().getNs6EMAIL1());
+//            }
+//
+//
+//
+//        } catch (SOAPException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        return new CustomerCreateResponse();
+//    }
     public CustomerCreateResponse customerCreationResponseToObject(SOAPMessage soapMessage) {
         try {
             Node node = new XMLNodeElement().getSoapBody(soapMessage);
@@ -30,7 +59,7 @@ public class ResponseProcessor {
             } else {
                 String message = node.getChildNodes().item(0).getChildNodes().item(4).getChildNodes().item(0).getNodeValue();
                 customerCreateResponse.setMessages(message);
-               // System.out.println(message);
+                // System.out.println(message);
 
             }
 
