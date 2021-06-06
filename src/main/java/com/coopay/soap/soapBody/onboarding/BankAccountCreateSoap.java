@@ -6,7 +6,7 @@ import com.coopay.security.RequestCredentials;
 public class BankAccountCreateSoap {
 
     public String body(AccountCreate accountCreate, RequestCredentials requestCredentials){
-        return "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\"\n" +
+        String soapBody= "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\"\n" +
                 "xmlns:cus=\"http://temenos.com/CUSTONBRD\" xmlns:acc=\"http://temenos.com/ACCOUNTOPENPOC\">\n" +
                 "   <soapenv:Header/>\n" +
                 "   <soapenv:Body>\n" +
@@ -42,5 +42,7 @@ public class BankAccountCreateSoap {
                 "      </cus:ACCOUNTOPEN>\n" +
                 "   </soapenv:Body>\n" +
                 "</soapenv:Envelope>";
+        System.out.println(soapBody);
+        return soapBody;
     }
 }
