@@ -89,7 +89,6 @@ public class CustomerService {
     	try {
 			inputStream =file.getInputStream();
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
         		
