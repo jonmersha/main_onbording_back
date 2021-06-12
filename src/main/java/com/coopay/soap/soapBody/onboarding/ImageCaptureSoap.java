@@ -6,8 +6,7 @@ import com.coopay.security.RequestCredentials;
 public class ImageCaptureSoap {
 
     public String body(ImageCapture imageCapture, RequestCredentials requestCredentials){
-
-        return "<soapenv:Envelope \n" +
+String soapBopdy= "<soapenv:Envelope \n" +
                 "xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\"\n" +
                 "xmlns:cus=\"http://temenos.com/CUSTONBRD\"\n" +
                 "xmlns:imd=\"http://temenos.com/IMDOCUMENTIMAGECAPTUREAPI\">\n" +
@@ -35,6 +34,8 @@ public class ImageCaptureSoap {
                 "\t</cus:IMAGECAPURE>\n" +
                 "\t</soapenv:Body>\n" +
                 "</soapenv:Envelope>\n";
+        System.out.println(soapBopdy);
+        return  soapBopdy;
 
     }
 }
